@@ -1,0 +1,601 @@
+<div class="container-fluid">
+    <div class="col-xs-12">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <a type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Cancel" href="#/contacts" ui-sref="account.customers"><i class="fa fa-reply"></i></a>
+                    <button ng-if="vm.contact_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Last" ng-click="vm.last()">
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                    <button ng-if="vm.contact_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Next" ng-click="vm.next()">
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button ng-if="vm.contact_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Back" ng-click="vm.back()">
+                        <i class="fa fa-step-backward"></i>
+                    </button>
+                    <button ng-if="vm.contact_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="First" ng-click="vm.first()">
+                        <i class="fa fa-fast-backward"></i>
+                    </button>
+                    <button ng-if="vm.contact_id === null" type="button" class="btn btn-sm btn-primary detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Save" ng-click="vm.addContact()">
+                        <i class="fa fa-floppy-o"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="panel panel-default">
+            <div ng-if="vm.contact_id === null" class="panel-heading">
+                <h3 class="panel-title"><span class="menu-icon fa fa-user"></span> New Contact</h3>
+            </div>
+            <div ng-if="vm.contact_id !== null" class="panel-heading">
+                <h3 class="panel-title"><span class="menu-icon fa fa-user"></span> {{vm.contact.first_name}} {{vm.contact.last_name}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <uib-tabset>
+                        <uib-tab>
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-info-circle"></i> General
+                            </uib-tab-heading>
+                            <div class="row">
+                                <div class="col-xs-12"><br>
+                                    <form class="form-horizontal" role="form">
+                                        <fieldset>
+                                            <legend><i class="menu-icon fa fa-user"></i> Contact Information</legend>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Company</label>
+                                                <div class="col-xs-6">
+                                                    <ui-select ng-change="vm.updatePrimaryCompany()" ng-model="vm.primary_company" theme="bootstrap">
+                                                        <ui-select-match placeholder="Search companies...">{{$select.selected.name}}</ui-select-match>
+                                                        <ui-select-choices repeat="c in vm.companies | filter: $select.search">
+                                                            <span ng-bind-html="c.name | highlight: $select.search"></span>
+                                                        </ui-select-choices>
+                                                        <ui-select-no-choice>
+                                                            <div class="form-group"><br>
+                                                                <label class="control-label col-xs-3">New</label>
+                                                                <div class="col-xs-6">
+                                                                    <input type="text" ng-model="vm.company_name" placeholder="Re-enter to confirm" class="form-control">
+                                                                </div>
+                                                                <label class="control-label col-xs-3">
+                                                                    <button ng-click="vm.newCompany()" type="button" class="btn btn-success btn-xs pull-left">Add</button>
+                                                                </label>
+                                                            </div>
+                                                        </ui-select-no-choice>
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Industry Group</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.contact.group" ng-change="vm.updateContact()" class="form-control">
+                                                        <option ng-repeat="g in vm.groups" value="{{g.name}}">{{g.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Region</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.contact.region" ng-change="vm.updateContact()" class="form-control">
+                                                        <option ng-repeat="r in vm.regions" value="{{r.name}}">{{r.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Contact Ranking</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.contact.ranking" class="form-control" ng-change="vm.updateContact()">
+                                                        <option value="A">A - Excellent</option>
+                                                        <option value="B">B - Good</option>
+                                                        <option value="C">C - Fair</option>
+                                                        <option value="X">X - Do Not Contact</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Contact Type</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.contact.type" class="form-control" ng-change="vm.updateContact()">
+                                                        <option value="Target">Target</option>
+                                                        <option value="Prospect">Prospect</option>
+                                                        <option value="Customer">Customer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Job Title</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.job_title" ng-change="vm.updateContact()"
+                                                    placeholder="Job Title" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">First Name</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.first_name" ng-change="vm.updateContact()"
+                                                    placeholder="First Name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Last Name</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.last_name" ng-change="vm.updateContact()"
+                                                    placeholder="Last Name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">E-Mail</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.email" ng-change="vm.updateContact()"
+                                                    placeholder="E-Mail" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Cell Number</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.cell_phone" ng-bind="vm.contact.cell_phone" ng-change="vm.updateContact()"
+                                                    placeholder="Cell Phone Number" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Business Phone Number</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.business_phone" ng-change="vm.updateContact()"
+                                                    placeholder="Business Number" class="form-control">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend><i class="menu-icon fa fa-map-marker"></i> Address</legend>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Address 1</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.address1" ng-change="vm.updateContact()"
+                                                    placeholder="Address 1" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Address 2</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.address2" ng-change="vm.updateContact()"
+                                                    placeholder="Address 2" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">City</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.city" ng-change="vm.updateContact()"
+                                                    placeholder="City" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Province</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.province" ng-change="vm.updateContact()"
+                                                    placeholder="Province" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Postal Code</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.postal_code" ng-change="vm.updateContact()"
+                                                    placeholder="Postal Code" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Country</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.contact.country" ng-change="vm.updateContact()"
+                                                    placeholder="Country" class="form-control">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null" select="tabShown = !tabShown" deselect="tabShown = !tabShown">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-industry"></i> Companies
+                            </uib-tab-heading>
+                            <div class="row"><br>
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-xs-5">
+                                            <div class="input-group input-group">
+                                                <span class="input-group-addon">Companies</span>
+                                                <ui-select ng-model="vm.company" theme="bootstrap" ng-disabled="disabled">
+                                                    <ui-select-match placeholder="Search companies...">{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="c in vm.companies | filter: $select.search">
+                                                        <span ng-bind-html="c.name | highlight: $select.search"></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary" uib-tooltip-placement="top" uib-tooltip="Add"
+                                                        ng-click="vm.addCompanyToContact()"><i class="fa fa-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><h4 class="panel-title"><i class="menu-icon fa fa-industry"></i> Companies</h4></div>
+                                        <div class="panel-body">
+                                            <div ui-grid="vm.gridContactCompanies" class="grid"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-list"></i> Preferences
+                            </uib-tab-heading>
+                            <div ng-if="preferences.lists.P.length !== 0" class="dnd row"><br>
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div ng-repeat="list in preferences.lists">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Ranked Preferences</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul dnd-list="list">
+                                                        <li ng-repeat="item in list"
+                                                            dnd-draggable="item"
+                                                            dnd-moved="list.splice($index, 1)"
+                                                            dnd-effect-allowed="move"
+                                                            dnd-selected="preferences.selected = item; vm.selectPreference(item.$id)"
+                                                            dnd-dragend="vm.preferenceRanking($index, item.$id, event)"
+                                                            ng-class="{'selected': preferences.selected === item}">
+                                                            <span ng-if="item.notes !== undefinded">{{item.priority}}{{'.'}} {{item.label}} {{' - '}}{{item.notes}}</span>
+                                                            <span ng-if="item.notes === undefinded">{{item.priority}}{{'.'}} {{item.label}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">{{vm.contact_preference.label}} Notes</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <textarea class="form-control" ng-model="vm.contact_preference.notes"
+                                                    ng-change="vm.updatePreferenceNote(vm.contact_preference.$id, vm.contact_preference.label)"
+                                                    placeholder="Enter {{vm.contact_preference.label}} Notes" rows="6"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="preferences.lists.P.length === 0" class="dnd row"><br>
+                                <div class="col-xs-4 col-xs-offset-4">
+                                    <div class="form-group">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Ranked Preferences</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h4 class="text-center">Preferences are not setup</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-line-chart"></i> KPI Triggers
+                            </uib-tab-heading>
+                            <div ng-if="kpis.lists.P.length !== 0" class="dnd row"><br>
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div ng-repeat="list in kpis.lists">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Ranked KPI Triggers</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul dnd-list="list">
+                                                        <li ng-repeat="item in list"
+                                                            dnd-draggable="item"
+                                                            dnd-moved="list.splice($index, 1)"
+                                                            dnd-effect-allowed="move"
+                                                            dnd-selected="kpis.selected = item; vm.selectKpi(item.$id)"
+                                                            dnd-dragend="vm.kpiRanking($index, item.$id, event)"
+                                                            ng-class="{'selected': kpis.selected === item}">
+                                                            <span ng-if="item.notes !== undefinded">{{item.priority}}{{'.'}} {{item.label}} {{' - '}}{{item.notes}}</span>
+                                                            <span ng-if="item.notes === undefinded">{{item.priority}}{{'.'}} {{item.label}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">{{vm.contact_kpi.label}} Notes</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <textarea class="form-control" ng-model="vm.contact_kpi.notes"
+                                                    ng-change="vm.updateKpiNote(vm.contact_kpi.$id, vm.contact_kpi.label)"
+                                                    placeholder="Enter {{vm.contact_kpi.label}} Notes" rows="6"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="kpis.lists.K.length === 0" class="dnd row"><br>
+                                <div class="col-xs-4 col-xs-offset-4">
+                                    <div class="form-group">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Ranked KPI's</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <h4 class="text-center">KPI's are not setup</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-question-circle"></i> Qualifying Questions
+                            </uib-tab-heading>
+                            <div class="row">
+                                <div class="col-xs-12"><br>
+                                    <form class="form-horizontal" role="form">
+                                        <legend><i class="menu-icon fa fa-question-circle"></i> Business Questions</legend>
+                                        <div ng-repeat="b in vm.business_questions" class="form-group">
+                                            <div class="col-xs-8 col-xs-offset-2">
+                                                <label>{{b.question}}</label>
+                                            </div>
+                                            <div ng-if="b.name === 'question1'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question1.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question1.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question1.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question1.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question2'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question2.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question2.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question2.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question2.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question3'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question3.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question3.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question3.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question3.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question4'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question4.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question4.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question4.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question4.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question5'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question5.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question5.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question5.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question5.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question6'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question6.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question6.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question6.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question6.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question7'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question7.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question7.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question7.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question7.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question8'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question8.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question8.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question8.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question8.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="b.name === 'question9'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.business_answers.question9.answer" ng-change="vm.updateBusinessAnswer(b.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.business_answers.question9.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.business_answers.question9.date_updated}}</label>
+                                                    <label>{{vm.contact.business_answers.question9.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <legend><i class="menu-icon fa fa-question-circle"></i> Solution Questions</legend>
+                                        <div ng-repeat="s in vm.solution_questions" class="form-group">
+                                            <div class="col-xs-8 col-xs-offset-2">
+                                                <label>{{s.question}}</label>
+                                            </div>
+                                            <div ng-if="s.name === 'question1'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question1.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question1.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question1.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question1.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question2'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question2.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question2.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question2.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question2.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question3'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question3.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question3.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question3.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question3.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question4'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question4.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question4.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question4.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question4.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question5'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question5.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question5.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question5.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question5.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question6'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question6.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question6.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question6.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question6.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question7'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question7.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question1.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question7.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question7.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question8'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question8.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question8.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question8.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question8.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                            <div ng-if="s.name === 'question9'" class="col-xs-8 col-xs-offset-2">
+                                                <textarea class="form-control" ng-model="vm.contact.solution_answers.question9.answer" ng-change="vm.updateSolutionAnswer(s.name)"
+                                                    placeholder="Enter Business Question Answers" rows="3"></textarea>
+                                                <span ng-if="vm.contact.solution_answers.question9.date_updated !== undefined" class="pull-right">
+                                                    <label>Last Update: </label>
+                                                    <label>{{vm.contact.solution_answers.question9.date_updated}}</label>
+                                                    <label>{{vm.contact.solution_answers.question9.time_updated}}</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-file-o"></i> Documents
+                            </uib-tab-heading><br>
+                            <fieldset>
+                                <legend><i class="menu-icon fa fa-file-o"></i> Contact Documents</legend>
+                                <button class="btn btn-default btn-block" ngf-select="vm.uploadFiles($files)" multiple accept="image/*" ngf-max-size="10MB">
+                                    <h4>Upload Contact Documents</h4>
+                                </button>
+                                <br>
+                                <div class="col-xs-12 text-center">
+                                    <div ng-repeat="d in vm.docs" class="col-xs-4">
+                                        <p>
+                                            <a href="{{d.url}}" target="new"><i class="fa {{d.icon}}"></i> {{d.name}}</a>
+                                            <a href ng-click="vm.removeDoc(d.$id)" tooltip-placement="top" uib-tooltip="Remove Doc" >
+                                            <i class="fa fa-times-circle text-danger"></i></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.contact_id !== null">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-hourglass-2"></i> Timeline
+                            </uib-tab-heading><br>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">New Note</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <textarea class="form-control" ng-model="vm.note" placeholder="Enter notes..." rows="6">
+                                    </textarea><br>
+                                    <button type="button" class="btn btn-sm btn-primary pull-right" uib-tooltip-placement="top" uib-tooltip="Submit Note" ng-click="vm.addContactNote()">
+                                        Add Note
+                                    </button>
+                                </div>
+                            </div>
+                            <div ng-repeat="n in vm.contact_notes.slice().reverse()">
+                                <div id="vertical-timeline" class="vertical-container light-timeline">
+                                    <div class="vertical-timeline-block">
+                                        <div class="vertical-timeline-icon">
+                                            <i ng-if="n.type === 'Note'" class="fa fa-file-o"></i>
+                                            <i ng-if="n.type === 'Preference'" class="fa fa-list"></i>
+                                            <i ng-if="n.type === 'KPI'" class="fa fa-line-chart"></i>
+                                        </div>
+                                        <div class="vertical-timeline-content">
+                                            <h4>{{n.type}}
+                                                <span class="vertical-date pull-right">
+                                                    <small>{{n.date_added | date}}</small>
+                                                </span>
+                                            </h4>
+                                            <p>{{n.note}}</p>
+                                        </div><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

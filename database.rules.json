@@ -1,0 +1,87 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+  		"profiles": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "users": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "companies": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "contacts": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "assets": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "activities": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "industry_groups": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "business_units": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "regions": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "preferences": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "kpis": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "sales_activities": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "business_questions": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "solution_questions": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "revenue_groups": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "quote_template": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "price_list": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "contact_staging": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "order_template": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "template_images": {
+        ".read": true,
+        ".write": "auth != null"
+      }
+
+  }
+}

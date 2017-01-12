@@ -1,0 +1,10 @@
+<div class="ui-grid-cell-contents">
+    <div align="right">
+        <span ng-if="row.entity.type === 'Target'" class="label label-info">
+            <i class="menu-icon fa fa-bullseye"></i> Target</span>
+        <span ng-if="row.entity.type === 'Prospect'" class="label label-warning">
+            <i class="menu-icon fa fa-check"></i> Prospect</span>
+        <span ng-if="row.entity.type === 'Customer'" class="label label-success">
+            <i class="menu-icon fa fa-heartbeat"></i> Customer</span>
+    </div>
+</div>

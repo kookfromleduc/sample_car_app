@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sample Car App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="bower_components/rdash-ui/dist/css/rdash.css">
+        <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css">
+        <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css">
+        <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
+    </head>
+    <div ng-app="app">
+
+        <div ui-view></div>
+
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+        <script>var config = {apiKey: "AIzaSyDLJBDki5W_hAIqPAd3NO4aeaNVSIe_TE0", authDomain: "project-6076522891885165395.firebaseapp.com",
+            databaseURL: "https://project-6076522891885165395.firebaseio.com", storageBucket: "project-6076522891885165395.appspot.com",};
+            firebase.initializeApp(config);
+        </script>
+
+        <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+        <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
+        <script src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+        <script src="bower_components/rdash-ui/dist/ui-rdash.js"></script>
+        <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+        <script src='bower_components/pdfmake/build/pdfmake.min.js'></script>
+        <script src='bower_components/pdfmake/build/vfs_fonts.js'></script>
+        <script src="bower_components/tinymce-dist/tinymce.min.js"></script>
+        <script src="bower_components/angular-ui-tinymce/dist/tinymce.min.js"></script>
+        <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+
+        <script src="app/app.module.js"></script>
+        <script src="app/landing/landing.module.js"></script>
+        <script src="app/landing/landing.route.js"></script>
+
+        <script src="app/core/core.module.js"></script>
+        <script src="app/core/core.service.js"></script>
+
+        <script src="app/auth/auth.module.js"></script>
+        <script src="app/auth/auth.controller.js"></script>
+        <script src="app/auth/auth.route.js"></script>
+        <script src="app/auth/auth.service.js"></script>
+
+        <script src="app/admin/admin.module.js"></script>
+        <script src="app/admin/admin.service.js"></script>
+
+        <script src="app/account/account.module.js"></script>
+        <script src="app/account/account.controller.js"></script>
+        <script src="app/account/account.route.js"></script>
+
+        <script src="app/dashboard/dashboard.module.js"></script>
+        <script src="app/dashboard/dashboard.controller.js"></script>
+        <script src="app/dashboard/dashboard.service.js"></script>
+
+        <script src="app/price_list/price_list.module.js"></script>
+        <script src="app/price_list/price_list.controller.js"></script>
+        <script src="app/price_list/price_list.service.js"></script>
+        <script src="app/price_list/price_list.route.js"></script>
+
+        <script src="app/assets/assets.module.js"></script>
+        <script src="app/assets/assets.controller.js"></script>
+        <script src="app/assets/assets.service.js"></script>
+        <script src="app/assets/assets.route.js"></script>
+
+        <script src="app/customers/customers.module.js"></script>
+        <script src="app/customers/customers.controller.js"></script>
+        <script src="app/customers/customers.service.js"></script>
+        <script src="app/customers/customers.route.js"></script>
+
+        <script src="app/activities/activities.module.js"></script>
+        <script src="app/activities/activities.controller.js"></script>
+        <script src="app/activities/activities.route.js"></script>
+        <script src="app/activities/activities.service.js"></script>
+
+        <script src="app/system/system.module.js"></script>
+        <script src="app/system/system.controller.js"></script>
+        <script src="app/system/system.route.js"></script>
+        <script src="app/system/system.service.js"></script>
+
+        <script src="app/tools/tools.module.js"></script>
+        <script src="app/tools/tools.controller.js"></script>
+        <script src="app/tools/tools.route.js"></script>
+        <script src="app/tools/tools.service.js"></script>
+
+
+    </div>
+</html>

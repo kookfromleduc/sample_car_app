@@ -1,0 +1,20 @@
+{
+  "name": "angular-editer",
+  "version": "0.0.1",
+  "homepage": "http://wanming.github.io/angular-editor",
+  "authors": [
+    "wanming"
+  ],
+  "description": "angular rich text editor with simditor(tower.im)",
+  "keywords": [
+    "ovack"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

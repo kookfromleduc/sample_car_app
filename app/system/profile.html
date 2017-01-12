@@ -1,0 +1,105 @@
+<div class="container-flpid">
+    <div class="col-xs-12">
+        <form class="form-horizontal">
+              <div class="form-group">
+                  <div class="col-xs-12">
+                      <a type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="Cancel" ui-sref="account.system"><i class="fa fa-reply"></i></a>
+                      <button ng-if="vm.profile_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="Last" ng-click="vm.last()">
+                            <i class="fa fa-fast-forward"></i>
+                      </button>
+                      <button ng-if="vm.profile_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="Next" ng-click="vm.next()">
+                            <i class="fa fa-step-forward"></i>
+                      </button>
+                      <button ng-if="vm.profile_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="Back" ng-click="vm.back()">
+                            <i class="fa fa-step-backward"></i>
+                      </button>
+                      <button ng-if="vm.profile_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="First" ng-click="vm.first()">
+                            <i class="fa fa-fast-backward"></i>
+                      </button>
+                      <button ng-if="vm.profile_id === null" type="button" class="btn btn-sm btn-primary detail-btn pull-right"
+                        tooltip-placement="top" uib-tooltip="Save" ng-click="vm.addProfile()">
+                            <i class="fa fa-floppy-o"></i>
+                      </button>
+                  </div>
+              </div>
+        </form>
+    <div class="panel panel-default">
+        <div ng-if="vm.id === null" class="panel-heading">
+            <h3 class="panel-title"><span class="menu-icon fa fa-profile-plus"></span> New Profile</h3>
+        </div>
+        <div ng-if="vm.id !== null" class="panel-heading">
+            <h3 class="panel-title"><span class="menu-icon fa fa-profile"></span> {{vm.profile.first_name}} {{vm.profile.last_name}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="container-fluid top-space-15">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">First Name</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" ng-model="vm.profile.first_name" ng-change="vm.updateProfile()"
+                                            placeholder="First Name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Last Name</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" ng-model="vm.profile.last_name" ng-change="vm.updateProfile()"
+                                            placeholder="Last Name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">E-Mail</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" ng-model="vm.profile.email" ng-change="vm.updateProfile()"
+                                            placeholder="Profile E-Mail" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Profile Type</label>
+                                    <div class="col-xs-8">
+                                        <select ng-model="vm.profile.type" ng-change="vm.updateProfile()" class="form-control">
+                                            <option value="Admin">Admin</option>
+                                            <option value="Sales Admin">Sales Admin</option>
+                                            <option value="Sales">Sales</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Status</label>
+                                    <div class="col-xs-8">
+                                        <select ng-model="vm.profile.status" ng-change="vm.updateProfile()" class="form-control">
+                                            <option value="Enabled">Enabled</option>
+                                            <option value="Disabled">Disabled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Office Number</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" ng-model="vm.profile.office_phone" ng-change="vm.updateProfile()"
+                                            placeholder="Office Phone Number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Cell Number</label>
+                                    <div class="col-xs-8">
+                                        <input type="text" ng-model="vm.profile.cell_phone" ng-change="vm.updateProfile()"
+                                            placeholder="Cell Phone Number" class="form-control">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

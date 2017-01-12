@@ -1,0 +1,346 @@
+<div class="container-fluid">
+    <div class="col-xs-12">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <a type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Cancel" ui-sref="account.customers.companies"><i class="fa fa-reply"></i></a>
+                    <button ng-if="vm.company_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Last" ng-click="vm.last()">
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                    <button ng-if="vm.company_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Next" ng-click="vm.next()">
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button ng-if="vm.company_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Back" ng-click="vm.back()">
+                        <i class="fa fa-step-backward"></i>
+                    </button>
+                    <button ng-if="vm.company_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="First" ng-click="vm.first()">
+                        <i class="fa fa-fast-backward"></i>
+                    </button>
+                    <button ng-if="vm.company_id === null" type="button" class="btn btn-sm btn-primary detail-btn pull-right"
+                    tooltip-placement="top" uib-tooltip="Save" ng-click="vm.newCompany()">
+                        <i class="fa fa-floppy-o"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="panel panel-default">
+            <div ng-if="vm.company_id === null" class="panel-heading">
+                <h3 class="panel-title"><span class="menu-icon fa fa-industry"></span> New Company</h3>
+            </div>
+            <div ng-if="vm.company_id !== null" class="panel-heading">
+                <h3 class="panel-title"><span class="menu-icon fa fa-industry"></span> {{vm.company.name}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <uib-tabset>
+                        <uib-tab>
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-list-ul"></i> General
+                            </uib-tab-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="container-fluid top-space-15">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Company Name</label>
+                                                <div class="col-xs-6">
+                                                    <input type="text" ng-model="vm.company.name" ng-change="vm.updateCompany()"
+                                                        placeholder="Company Name" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Industry Group</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.company.group" ng-change="vm.updateCompany()" class="form-control">
+                                                        <option ng-repeat="i in vm.industryGroups" value="{{i.name}}">{{i.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div ng-if="vm.businessUnits.length !== 0" class="form-group">
+                                                <label class="control-label col-xs-3">Business Unit</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.company.business_unit" ng-change="vm.updateCompany()" class="form-control">
+                                                        <option ng-repeat="b in vm.businessUnits" value="{{b.name}}">{{b.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Region</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.company.region" ng-change="vm.updateCompany()" class="form-control">
+                                                        <option ng-repeat="r in vm.regions" value="{{r.name}}">{{r.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Company Ranking</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.company.ranking" class="form-control" ng-change="vm.updateCompany()">
+                                                        <option value="A">A - Excellent</option>
+                                                        <option value="B">B - Good</option>
+                                                        <option value="C">C - Fair</option>
+                                                        <option value="X">X - Do Not Contact</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Company Type</label>
+                                                <div class="col-xs-6">
+                                                    <select ng-model="vm.company.type" class="form-control" ng-change="vm.updateCompany()">
+                                                        <option value="Target">Target</option>
+                                                        <option value="Prospect">Prospect</option>
+                                                        <option value="Customer">Customer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <fieldset>
+                                                <legend><i class="menu-icon fa fa-user"></i> Primary Contact</legend>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Contact</label>
+                                                    <div class="col-xs-6">
+                                                        <ui-select ng-change="vm.updatePrimaryContact()" ng-model="vm.primary_contact" theme="bootstrap">
+                                                            <ui-select-match placeholder="Search contacts...">{{$select.selected.full_name}}</ui-select-match>
+                                                            <ui-select-choices repeat="c in vm.contacts | filter: $select.search">
+                                                                <span ng-bind-html="c.full_name | highlight: $select.search"></span>
+                                                            </ui-select-choices>
+                                                            <ui-select-no-choice>
+                                                                <div class="form-group"><br>
+                                                                    <label class="control-label col-xs-3">New</label>
+                                                                    <div class="col-xs-6">
+                                                                        <input type="text" ng-model="vm.contact_name" placeholder="Re-enter to confirm" class="form-control">
+                                                                    </div>
+                                                                    <label class="control-label col-xs-3">
+                                                                        <button ng-click="vm.newContact()" type="button" class="btn btn-success btn-xs pull-left">Add</button>
+                                                                    </label>
+                                                                </div>
+                                                            </ui-select-no-choice>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Job Title</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.job_title" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="Job Title" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">First Name</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.first_name" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="First Name" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Last Name</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.last_name" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="Last Name" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">E-Mail</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.email" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="Email" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Cell Number</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.cell_phone" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="Cell Phone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Business Phone Number</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.primary_contact.business_phone" ng-change="vm.updatePrimaryContactNode()"
+                                                            placeholder="Business Phone" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend><i class="menu-icon fa fa-map-marker"></i> Primary Address</legend>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Address 1</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.address1" ng-change="vm.updateCompany()"
+                                                            placeholder="Address 1" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Address 2</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.address2" ng-change="vm.updateCompany()"
+                                                            placeholder="Address 2" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">City</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.city" ng-change="vm.updateCompany()"
+                                                            placeholder="City" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Postal Code</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.postal_code" ng-change="vm.updateCompany()"
+                                                        placeholder="Postal Code" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Country</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.country" ng-change="vm.updateCompany()"
+                                                            placeholder="Country" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3">Province</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" ng-model="vm.company.province" ng-change="vm.updateCompany()"
+                                                            placeholder="Province" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab>
+                            <uib-tab-heading>
+                            <i class="menu-icon fa fa-map-marker"></i> Addresses
+                            </uib-tab-heading>
+                            <div class="col-xs-12">
+                                <div class="container-fluid top-space-15">
+                                    <div class="col-xs-2">
+                                        <ul class="nav nav-pills nav-stacked">
+                                            <li ng-if="vm.selectedPriority === 1" ng-repeat="a in vm.addresses">
+                                                <a ng-if="a.priority === 1" class="btn btn-primary" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)" role="button">
+                                                    Address {{a.priority}}
+                                                </a>
+                                                <a ng-if="a.priority != 1" class="text-center" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)">
+                                                    <i class="fa fa-minus-circle" ng-click="vm.removeAddress(a.$id)"></i> Address {{a.priority}}
+                                                </a>
+                                            </li>
+                                            <li ng-if="vm.selectedPriority != 1" class="text-center" ng-repeat="a in vm.addresses">
+                                                <a ng-if="a.priority === 1" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)" role="button">
+                               newCompanyress {{a.priority}}
+                                                </a>
+                                                <a ng-if="a.priority < vm.selectedPriority && a.priority != 1" class="text-center" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)">
+                                                    <i class="fa fa-minus-circle" ng-click="vm.removeAddress(a.$id)"></i> Address {{a.priority}}
+                                                </a>
+                                                <a ng-if="a.priority === vm.selectedPriority" class="btn btn-primary" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)" role="button">
+                                                    <i class="fa fa-minus-circle" ng-click="vm.removeAddress(a.$id)"></i> Address {{a.priority}}
+                                                </a>
+                                                <a ng-if="a.priority > vm.selectedPriority" class="text-center" ui-sref="account.customers.company" ng-click="vm.getAddress(a.$id)">
+                                                    <i class="fa fa-minus-circle" ng-click="vm.removeAddress(a.$id)"></i> Address {{a.priority}}
+                                                </a>
+                                            </li>
+                                            <li><a class="text-center" href="" ng-click="vm.addAddress();"><i class="fa fa-plus-circle"></i> Add Address</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Address {{vm.address.priority}}</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">Address 1</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_address1" ng-change="vm.updateAddress()"
+                                                                placeholder="Address 1" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">Address 2</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_address2" ng-change="vm.updateAddress()"
+                                                                placeholder="Address 2" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">City</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_city" ng-change="vm.updateAddress()"
+                                                                placeholder="City" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">Postal Code</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_postal" ng-change="vm.updateAddress()"
+                                                                placeholder="Postal Code" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">Country</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_country" ng-change="vm.updateAddress()"
+                                                                placeholder="Country" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3">Province</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="text" ng-model="vm.address.company_province" ng-change="vm.updateAddress()"
+                                                                placeholder="Province" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab ng-if="vm.company_id !== null" select="tabShown = !tabShown" deselect="tabShown = !tabShown">
+                            <uib-tab-heading>
+                                <i class="menu-icon fa fa-users"></i> Contacts
+                            </uib-tab-heading>
+                            <div class="row"><br>
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-xs-5">
+                                            <div class="input-group input-group">
+                                                <span class="input-group-addon">Contact</span>
+                                                <ui-select ng-model="vm.contact" theme="bootstrap" ng-disabled="disabled">
+                                                    <ui-select-match placeholder="Search contacts...">{{$select.selected.first_name}} {{$select.selected.last_name}}</ui-select-match>
+                                                    <ui-select-choices repeat="c in vm.contacts | filter: $select.search">
+                                                        <span ng-bind-html="c.first_name | highlight: $select.search"></span>
+                                                        <span ng-bind-html="c.last_name | highlight: $select.search"></span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary"  uib-tooltip-placement="top" uib-tooltip="Add"
+                                                        ng-click="vm.newContactToCompany()"><i class="fa fa-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><h4 class="panel-title">Contact List</h4></div>
+                                        <div class="panel-body">
+                                            <div ui-grid="vm.gridCompanyContacts" class="grid"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

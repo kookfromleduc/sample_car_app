@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="col-xs-12">
+        <fieldset>
+            <legend><i class="menu-icon fa fa-clock-o"></i> Sales Activities</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <div class="input-group input-group-xs">
+                            <span class="input-group-addon">Sales Activity</span>
+                            <input type="text" ng-model="vm.sales_activity.name" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="vm.addNode('sales_activity')" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="menu-icon fa fa-clock-o"></i> Sales Activities</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="vm.gridSalesActivities" class="grid-200"></div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><i class="menu-icon fa fa-list-ul"></i> Preferences</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <div class="input-group input-group-xs">
+                            <span class="input-group-addon">Preference</span>
+                            <input type="text" ng-model="vm.preference.label" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="vm.addPreference()" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="menu-icon fa fa-list-ul"></i> Preferences</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="vm.gridPreferences" class="grid-200"></div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><i class="menu-icon fa fa-line-chart"></i> Key Performace Indicators (KPI)</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-4">
+                        <div class="input-group input-group-xs">
+                            <span class="input-group-addon">KPI</span>
+                            <input type="text" ng-model="vm.kpi.label" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="vm.addKpi()" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="menu-icon fa fa-line-chart"></i> Key Performace Indicators</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="vm.gridKpis" class="grid-200"></div>
+                </div>
+            </div>
+        </fieldset>        
+        <fieldset>
+            <legend><i class="menu-icon fa fa-question-circle"></i> Business Questions</legend>
+            <form class="form-horizontal" role="form">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <textarea class="form-control" ng-model="vm.business_question.question" placeholder="Enter Business Question" rows="3"></textarea>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-primary pull-right" ng-click="vm.addNode('business_question')" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="menu-icon fa fa-question-circle"></i> Business Questions</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="vm.gridBusinessQuestions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid-200"></div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend><i class="menu-icon fa fa-question-circle"></i> Solution Questions</legend>
+            <form class="form-horizontal" role="form">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <textarea class="form-control" ng-model="vm.solution_question.question" placeholder="Enter Solution Question" rows="3"></textarea>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-primary pull-right" ng-click="vm.addNode('solution_question')" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="menu-icon fa fa-question-circle"></i> Solution Questions</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="vm.gridSolutionQuestions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid-200"></div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

@@ -1,0 +1,342 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="board">
+                <div class="board-inner">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <div class="liner"></div>
+                        <li>
+                            <h4 class="text-center">Contact</h4>
+                            <a ui-sref="account.activity" data-toggle="tab" title="Contact">
+                                <span class="round-tabs one">
+                                    <i class="fa fa-info"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <h4 class="text-center">Discovery</h4>
+                            <a ui-sref="account.activity.discovery" data-toggle="tab" title="Discovery">
+                                <span class="round-tabs two">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <h4 class="text-center">Proposal</h4>
+                            <a ui-sref="account.activity.proposal" data-toggle="tab" title="Proposal">
+                                <span class="round-tabs three">
+                                    <i class="fa fa-file-powerpoint-o"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <h4 class="text-center">Quote</h4>
+                            <a ui-sref="account.activity.quote" data-toggle="tab" title="Quote">
+                                <span class="round-tabs four">
+                                    <i class="fa fa-file-text"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <h4 class="text-center">Order</h4>
+                            <a ui-sref="account.activity.order" data-toggle="tab" title="Order">
+                                <span class="round-tabs five">
+                                    <i class="fa fa-clipboard"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active">
+                        <div class="row">
+                            <div ng-if="vm.activity_id != null && vm.activity_id !== 'new'" class="col-xs-3">
+                                <h6 class="text-left">{{vm.activity.contact_full_name}} | {{vm.contact.job_title}}</h6>
+                                <h6 class="text-left">{{vm.contact.email}}</h6>
+                                <h6 ng-if="vm.contact.business_phone !== ''" class="text-left">Bus: {{vm.contact.business_phone}}</h6>
+                                <h6 ng-if="vm.contact.cell_phone !== ''" class="text-left">Cell: {{vm.contact.cell_phone}}</h6>
+                                <span ng-repeat="co in vm.contact.companies" class="label label-default label-5px-right"><i class="menu-icon fa fa-industry"></i> {{co.name}}</span>
+                            </div>
+                            <div class="col-xs-6">
+                                <h2 class="text-center">Quote<h2>
+                            </div>
+                            <div ng-if="vm.activity.quote_status === undefined" class="col-xs-3">
+                                <h6 class="text-right">{{vm.quote.date}} {{vm.quote.time}}</h6>
+                            </div>
+                            <div ng-if="vm.activity.quote_status === true" class="col-xs-3">
+                                <h6 class="text-right"><u>Added:</u> {{vm.quote.date_added}} {{vm.quote.time_added}}</h6>
+                                <h6 class="text-right"><u>Updated:</u> {{vm.quote.date_updated}} {{vm.quote.time_updated}}</h6>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <span ng-if="vm.activity.quote_status === true" class="text-right pull-left" style="cursor:pointer"
+                                    uib-tooltip-placement="top" uib-tooltip="Create PDF" ng-click="vm.createQuotePdf()">
+                                    <i class="fa fa-2x fa-file-pdf-o" style="color:red"></i>
+                                </span>
+                                <button type="button" class="btn-calendar pull-right" uib-tooltip-placement="top" uib-tooltip="Add Event" ng-click="vm.addCalendarEvent()">
+                                    <i class="fa fa-2x fa-calendar text-primary"></i>
+                                </button>
+                            </div>
+                        </div><br>
+                        <div align="center">
+                            <img ng-src="{{vm.template_images.header_image.url}}" width="100%">
+                        </div><br>
+                        <div ng-if="vm.activity_id != null && vm.activity_id !== 'new'">
+                            <div class="row">
+                                <div class="col-xs-12 ">
+                                    <span class="pull-right">{{vm.quote.date_updated}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h4>{{vm.contact.company_name}}</h4>
+                                    <p class="text-left">
+                                    {{vm.contact.address1}}<br>
+                                    {{vm.contact.city}}, {{vm.contact.province}}<br>
+                                    {{vm.contact.postal}}</p>
+                                    <p>Attention: {{vm.activity.contact_full_name}}<br>
+                                    <span ng-if="vm.contact.cell_phone !== undefined">Cell: {{vm.contact.cell_phone}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4 class="text-left"></h4>
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-xs-12">
+                            <h4>{{vm.quote_template.subject_line}}</h4>
+                        </div><br><br>
+                        <div class="col-xs-12">
+                            <p ng-bind-html="vm.quote_template.preamble"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <label class="control-label">Order Type</label>
+                                <select ng-model="vm.activity.order_type" class="form-control" ng-change="vm.updateOrderType()">
+                                    <option value="Four Week Rate">Four Week Rate</option>
+                                    <option value="Daily Rate">Daily Rate</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4">
+                                <label class="control-label">Category</label>
+                                <select ng-model="vm.category" class="form-control" ng-change="vm.loadPrices()" >
+                                    <option ng-repeat="cat in vm.categories" value="{{cat.name}}">{{cat.name}}</option>
+                                </select>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <label class="control-label">Rental Rate</label>
+                                <ui-select ng-model="vm.price" theme="bootstrap" ng-disabled="disabled">
+                                    <ui-select-match placeholder="Search Rates...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="p in vm.price_list | filter: $select.search">
+                                        <span ng-bind-html="p.name | highlight: $select.search"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-xs-2 inline-btn" align="right">
+                                <button type="button" class="btn btn-sm btn-primary" uib-tooltip-placement="top" uib-tooltip="Add Rate" ng-click="vm.addRate()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div><br><br>
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered colored">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center" colspan="5"><h5>Rental Rates</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">Name</td>
+                                            <td class="text-left">Description</td>
+                                            <td ng-if="vm.activity.order_type !== 'Daily Rate'" class="text-left" width="125px">4 Week Rate</td>
+                                            <td ng-if="vm.activity.order_type !== 'Daily Rate'" class="text-left" width="125px">Weekly Rate</td>
+                                            <td class="text-left" width="125px">Day Rate</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="r in vm.chosen_rates">
+                                            <td class="text-left">
+                                                <p>{{r.name}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <p>{{r.description}}</p>
+                                            </td>
+                                            <td ng-if="vm.activity.order_type !== 'Daily Rate'" width="125px">
+                                                <div class="input-group">
+                                                    <input type="number" ng-model="r.four_week_rate" ng-change="vm.updateRate(r)"
+                                                    class="form-control" style="text-align: right">
+                                                </div>
+                                            </td>
+                                            <td ng-if="vm.activity.order_type !== 'Daily Rate'" width="125px">
+                                                <div class="input-group">
+                                                    <input type="number" ng-model="r.week_rate" ng-change="vm.updateRate(r)"
+                                                    class="form-control" style="text-align: right">
+                                                </div>
+                                            </td>
+                                            <td width="125px">
+                                                <div class="input-group"><input type="number" ng-model="r.day_rate" ng-change="vm.updateRate(r)"
+                                                    class="form-control" style="text-align: right">
+                                                  <span class="input-group-btn">
+                                                    <button class="btn btn-danger" ng-click="vm.removeRate(r)" type="button"><span class="menu-icon fa fa-times"></span></button>
+                                                  </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><br><br>
+                        <div ng-if="vm.activity.order_type === 'Four Week Rate'" class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center" colspan="3"><h5>Rates By Shift</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">Shift</td>
+                                            <td class="text-left">Runtime</td>
+                                            <td class="text-right">% of Cost</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="r in vm.ratesByShift">
+                                            <td class="text-left">
+                                                <p>{{r.label}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <p>{{r.runtime}}</p>
+                                            </td>
+                                            <td class="text-right">
+                                                <p>{{r.percent_of_cost}}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><br><br>
+                        <div class="col-xs-12">
+                            <p>Additional Information</p>
+                            <form class="form-horizontal" role="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <textarea class="form-control" ng-model="vm.new_service" placeholder="Enter Service" rows="2"></textarea>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button class="btn btn-primary pull-right" ng-click="vm.addActivityNode('service')" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <div class="row">
+                                <div ui-grid="vm.gridServices" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid-auto"></div>
+                            </div><br>
+                            <form class="form-horizontal" role="form">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <textarea class="form-control" ng-model="vm.new_transportation" placeholder="Enter Transportation" rows="2"></textarea>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button class="btn btn-primary pull-right" ng-click="vm.addActivityNode('transportation')" type="button"><span class="menu-icon fa fa-plus"></span></button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <div class="row">
+                                <div ui-grid="vm.gridTransportation" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid-auto"></div>
+                            </div><br>
+
+
+
+                        </div><br><br>
+                        <div class="col-xs-12">
+                            <p ng-bind-html="vm.quote_template.closing_statement"></p>
+                            <p ng-bind-html="vm.user_profile.signature_statement"></p>
+                        </div>
+                        <div class="col-xs-12">
+                            <p><img ng-src="{{vm.user_profile.signature_image.url}}"></p>
+                        </div>
+                        <div class="col-xs-12">
+                            <p>{{vm.user_profile.first_name}} {{vm.user_profile.last_name}}</p>
+                        </div>
+                        <div align="center" >
+                            <img class="quote_footer" ng-src="{{vm.template_images.footer_image.url}}" width="100%">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-3">
+                                <button ng-click="vm.removeStatus()" type="button" class="btn btn-default pull-right"><i class="fa fa-chevron-left"></i> Back</button>
+                            </div>
+                            <div ng-if="vm.activity.quote_status === undefined" class="col-lg-3 col-lg-offset-6">
+                                <button ng-click="vm.updateQuote()" type="button" class="btn btn-default pull-left">Complete Quote</i></button>
+                            </div>
+                            <div ng-if="vm.activity.quote_status === true" class="col-lg-3 col-lg-offset-6">
+                                <button type="button" class="btn btn-default pull-left" ng-click="vm.next()">Next <i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{event.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-xs-3">Subject</label>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" ng-model="event.title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Starts</label>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="event.startDate"
+                            is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input id="startTime" type="time" class="form-control" step="60" value="{{displayStartTime}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Ends</label>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="event.endDate"
+                            is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input id="endTime" type="time" class="form-control" step="60" value="{{displayEndTime}}">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="saveEvent()">Save</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row"><button ng-click="vm.mergeContacts()" type="button" class="btn btn-default pull-left">Merge Contacts</button></div><br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="menu-icon fa fa-upload"></span> Import Contacts</h3>
+            </div>
+            <div class="panel-body">
+                <div ui-grid="vm.gridImportContacts" class="grid-500" ui-grid-edit ui-grid-importer ui-grid-row-edit></div>
+            </div>
+        </div>
+    </div>
+</div>

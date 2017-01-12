@@ -1,0 +1,14 @@
+<div class="ui-grid-cell-contents">
+    <div align="right">
+        <span ng-if="row.entity.info_status === true" ng-click="grid.appScope.vm.selectStep(row, 'info')" class="label label-info">
+            <i class="menu-icon fa fa-info"></i> Info</span>
+        <span ng-if="row.entity.discovery_status === true" ng-click="grid.appScope.vm.selectStep(row, 'discovery')" class="label label-danger">
+            <i class="menu-icon fa fa-eye"></i> Discovery</span>
+        <span ng-if="row.entity.proposal_status === true" ng-click="grid.appScope.vm.selectStep(row, 'proposal')" class="label label-warning">
+            <i class="menu-icon fa fa-file-powerpoint-o"></i> Proposal</span>
+        <span ng-if="row.entity.quote_status === true" ng-click="grid.appScope.vm.selectStep(row, 'quote')" class="label label-primary">
+            <i class="menu-icon fa fa-file-text"></i> Quote</span>
+        <span ng-if="row.entity.order_status === true" ng-click="grid.appScope.vm.selectStep(row, 'order')" class="label label-success">
+            <i class="menu-icon fa fa-clipboard"></i> Order</span>
+    </div>
+</div>

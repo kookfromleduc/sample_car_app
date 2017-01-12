@@ -1,0 +1,162 @@
+<div class="container">
+    <div class="row">
+        <div class="board">
+            <div class="board-inner">
+                <ul class="nav nav-tabs" id="myTab">
+                    <div class="liner"></div>
+                    <li>
+                        <h4 class="text-center">Contact</h4>
+                        <a ui-sref="account.activity" data-toggle="tab" title="Contact">
+                            <span class="round-tabs one">
+                                <i class="fa fa-info"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <h4 class="text-center">Discovery</h4>
+                        <a ui-sref="account.activity.discovery" data-toggle="tab" title="Discovery">
+                            <span class="round-tabs two">
+                                <i class="fa fa-eye"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <h4 class="text-center">Proposal</h4>
+                        <a ui-sref="account.activity.proposal" data-toggle="tab" title="Proposal">
+                            <span class="round-tabs three">
+                                <i class="fa fa-file-powerpoint-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <h4 class="text-center">Quote</h4>
+                        <a ui-sref="account.activity.quote" data-toggle="tab" title="Quote">
+                            <span class="round-tabs four">
+                                <i class="fa fa-clipboard"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <h4 class="text-center">Order</h4>
+                        <a ui-sref="account.activity.order" data-toggle="tab" title="Order">
+                            <span class="round-tabs five">
+                                <i class="fa fa-list"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+             </div>
+             <div class="tab-content">
+                 <div class="tab-pane fade in active">
+                     <div class="row">
+                         <div ng-if="vm.activity_id != null && vm.activity_id !== 'new'" class="col-xs-3">
+                             <h6 class="text-left">{{vm.activity.contact_full_name}} | {{vm.contact.job_title}}</h6>
+                             <h6 class="text-left">{{vm.contact.email}}</h6>
+                             <h6 ng-if="vm.contact.business_phone !== ''" class="text-left">Bus: {{vm.contact.business_phone}}</h6>
+                             <h6 ng-if="vm.contact.cell_phone !== ''" class="text-left">Cell: {{vm.contact.cell_phone}}</h6>
+                             <span ng-repeat="co in vm.contact.companies" class="label label-default label-5px-right"><i class="menu-icon fa fa-industry"></i> {{co.name}}</span>
+                         </div>
+                         <div class="col-xs-6">
+                             <h2 class="text-center">Proposal<h2>
+                         </div>
+                         <div ng-if="vm.activity.proposal_status === undefined" class="col-xs-3">
+                             <h6 class="text-right">{{vm.proposal.date}} {{vm.proposal.time}}</h6>
+                         </div>
+                         <div ng-if="vm.activity.proposal_status === true" class="col-xs-3">
+                             <h6 class="text-right"><u>Added:</u> {{vm.proposal.date_added}} {{vm.proposal.time_added}}</h6>
+                             <h6 class="text-right"><u>Updated:</u> {{vm.proposal.date_updated}} {{vm.proposal.time_updated}}</h6>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-xs-12">
+                             <button type="button" class="btn-calendar pull-right" uib-tooltip-placement="top" uib-tooltip="Add Event" ng-click="vm.addCalendarEvent()">
+                                 <i class="fa fa-2x fa-calendar text-primary"></i>
+                             </button>
+                         </div>
+                     </div>
+                     <div class="col-xs-12">
+                         <fieldset>
+                             <legend><i class="menu-icon fa fa-file-powerpoint-o"></i> Proposal and Project Documents</legend>
+                             <button class="btn btn-default btn-block" ngf-select="vm.uploadFiles($files)" multiple accept="image/*" ngf-max-size="10MB">
+                                 <h4>Upload Proposal and Project Documents</h4>
+                             </button>
+                             <br>
+                             <div class="col-xs-12 text-center">
+                                 <div ng-repeat="d in vm.docs" class="col-xs-4">
+                                     <p>
+                                         <a href="{{d.url}}" target="new"><i class="fa {{d.icon}}"></i> {{d.name}}</a>
+                                         <a href ng-click="vm.removeDoc(d.$id)" tooltip-placement="top" uib-tooltip="Remove Doc" >
+                                         <i class="fa fa-times-circle text-danger"></i></a>
+                                     </p>
+                                 </div>
+                             </div>
+                             <legend>&nbsp;</legend>
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="col-lg-3">
+                                <button ng-click="vm.removeStatus()" type="button" class="btn btn-default pull-right"><i class="fa fa-chevron-left"></i> Back</button>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-6">
+                                <button ng-click="vm.updateProposal()" type="button" class="btn btn-default pull-left">Next <i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+ <script type="text/ng-template" id="myModalContent.html">
+     <div class="modal-header">
+         <h3 class="modal-title">{{event.title}}</h3>
+     </div>
+     <div class="modal-body">
+         <form class="form-horizontal" role="form">
+             <div class="form-group">
+                 <label class="control-label col-xs-3">Subject</label>
+                 <div class="col-xs-8">
+                     <input type="text" class="form-control" ng-model="event.title">
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="control-label col-xs-3">Starts</label>
+                 <div class="col-xs-4">
+                     <div class="input-group">
+                         <input type="text" class="form-control" uib-datepicker-popup ng-model="event.startDate"
+                             is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                         <span class="input-group-btn">
+                             <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                     </div>
+                 </div>
+                 <div class="col-xs-4">
+                     <div class="input-group">
+                         <input id="startTime" type="time" class="form-control" step="60" value="{{displayStartTime}}">
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="control-label col-xs-3">Ends</label>
+                 <div class="col-xs-4">
+                     <div class="input-group">
+                         <input type="text" class="form-control" uib-datepicker-popup ng-model="event.endDate"
+                             is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                         <span class="input-group-btn">
+                             <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                     </div>
+                 </div>
+                 <div class="col-xs-4">
+                     <div class="input-group">
+                         <input id="endTime" type="time" class="form-control" step="60" value="{{displayEndTime}}">
+                     </div>
+                 </div>
+             </div>
+         </form>
+     </div>
+     <div class="modal-footer">
+         <button class="btn btn-primary" type="button" ng-click="saveEvent()">Save</button>
+         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+     </div>
+ </script>
