@@ -19,16 +19,6 @@
         'ui.calendar',
         'app.auth',
         'app.landing',
-        'app.core',
-        'app.customers',
-        'app.activities',
-        'app.admin',
-        'app.account',
-        'app.dashboard',
-        'app.price_list',
-        'app.assets',
-        'app.system',
-        'app.tools'
     ])
 
     .config(configFunction)

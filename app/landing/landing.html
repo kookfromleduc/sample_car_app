@@ -7,18 +7,31 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#/" class="pull-left"><img src="app/img/proenergylogo.png"></a>
+            <a href="#/" class="pull-left">What the fuck</a>
         </div>
     </div>
 </nav>
 
 <div class="container top-space-80">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-3">
-            <a class="btn btn-lg btn-primary" ui-sref="login" role="button">Login</a>
+    <div class="container-fluid">
+        <div class="col-xs-12">
+            <a type="button" class="btn btn-sm btn-primary list-btn pull-right" tooltip-placement="top" uib-tooltip="New"
+            ui-sref="account.price_list.price"><i class="fa fa-plus"></i>
+            </a>
         </div>
-        <div class="col-md-4">
-            <a class="btn btn-lg btn-primary" ui-sref="register" role="button">Register</a>
+        <div class="row">
+            <div class="col-xs-12"><br>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><span class="menu-icon fa fa-list"></span> Price List</h4>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ui-grid="vm.gridPriceList" class="grid-500" ui-grid-edit ui-grid-cellNav></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
