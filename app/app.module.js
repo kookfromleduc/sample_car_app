@@ -14,11 +14,7 @@
         'ui.grid.importer',
         'ngSanitize',
         'dndLists',
-        'ngFileUpload',
-        'ui.tinymce',
-        'ui.calendar',
-        'app.auth',
-        'app.landing',
+        'app.garage',
     ])
 
     .config(configFunction)
@@ -35,7 +31,7 @@
     function runFunction($rootScope, $state) {
         $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
             if (error === "AUTH_REQUIRED") {
-                $state.go('landing');
+                $state.go('garage');
             }
         });
     }
