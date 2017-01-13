@@ -36,7 +36,7 @@
               return root.ref('cars/'+ id).remove();
           }
           function car(id) {
-              return $firebaseObject(firebase.database().ref('cars/'+ id));
+              return $firebaseObject(root.ref('cars/'+ id));
           }
           function index(id) {
               return $firebaseArray(root.ref('cars/')).$indexFor(id);
