@@ -12,9 +12,9 @@
           var root = firebase.database();
 
           var service = {
-              root: root,
               cars: cars,
               addCar: addCar,
+              removeCar: removeCar,
               car: car,
               index: index,
               key: key,
@@ -28,7 +28,7 @@
 
           function addCar(obj) {
               obj.date_added = firebase.database.ServerValue.TIMESTAMP;
-              return root.cars.$add(obj).then(function(ref){
+              return $firebaseArray(root.ref('cars/')).$add(obj).then(function(ref){
                   return ref.key;
               });
           }
@@ -39,10 +39,10 @@
               return $firebaseObject(firebase.database().ref('cars/'+ id));
           }
           function index(id) {
-              return root.cars.$indexFor(id);
+              return $firebaseArray(root.ref('cars/')).$indexFor(id);
           }
           function key(key) {
-              return root.cars.$keyAt(key);
+              return $firebaseArray(root.ref('cars/')).$keyAt(key);
           }
     }
 

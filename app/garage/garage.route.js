@@ -17,7 +17,7 @@
 
         })
 
-        .state('garage.car', {
+        .state('car', {
             url: '/car',
             params: {
                 rowEntity: null,

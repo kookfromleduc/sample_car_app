@@ -6,81 +6,83 @@
     </div>
 </nav>
 
-<div class="container-fluid" ng-controller="carCtrl">
-    <div class="col-xs-12">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <div class="input-group input-group-sm pull-right">
-                        <a type="button" class="btn btn-sm btn-default detail-btn pull-right" uib-tooltip-placement="top" uib-tooltip="Cancel"
-                        ui-sref="garage"><i class="fa fa-reply"></i></a>
-                        <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
-                        uib-tooltip-placement="top" uib-tooltip="Last" ng-click="vm.last()">
-                            <i class="fa fa-fast-forward"></i>
-                        </button>
-                        <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
-                        uib-tooltip-placement="top" uib-tooltip="Next" ng-click="vm.next()">
-                            <i class="fa fa-step-forward"></i>
-                        </button>
-                        <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
-                        uib-tooltip-placement="top" uib-tooltip="Back" ng-click="vm.back()">
-                            <i class="fa fa-step-backward"></i>
-                        </button>
-                        <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
-                        uib-tooltip-placement="top" uib-tooltip="First" ng-click="vm.first()">
-                            <i class="fa fa-fast-backward"></i>
-                        </button>
-                        <button ng-if="vm.car_id === null" type="button" class="btn btn-sm btn-primary detail-btn pull-right"
-                        uib-tooltip-placement="top" uib-tooltip="Save" ng-click="vm.addCar()">
-                            <i class="fa fa-floppy-o"></i>
-                        </button>
+<div class="container top-space-80">
+    <div class="container-fluid" ng-controller="carCtrl">
+        <div class="col-xs-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group input-group-sm pull-right">
+                            <a type="button" class="btn btn-sm btn-default detail-btn pull-right" uib-tooltip-placement="top" uib-tooltip="Cancel"
+                            ui-sref="garage"><i class="fa fa-reply"></i></a>
+                            <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                            uib-tooltip-placement="top" uib-tooltip="Last" ng-click="vm.last()">
+                                <i class="fa fa-fast-forward"></i>
+                            </button>
+                            <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                            uib-tooltip-placement="top" uib-tooltip="Next" ng-click="vm.next()">
+                                <i class="fa fa-step-forward"></i>
+                            </button>
+                            <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                            uib-tooltip-placement="top" uib-tooltip="Back" ng-click="vm.back()">
+                                <i class="fa fa-step-backward"></i>
+                            </button>
+                            <button ng-if="vm.car_id !== null" type="button" class="btn btn-sm btn-default detail-btn pull-right"
+                            uib-tooltip-placement="top" uib-tooltip="First" ng-click="vm.first()">
+                                <i class="fa fa-fast-backward"></i>
+                            </button>
+                            <button ng-if="vm.car_id === null" type="button" class="btn btn-sm btn-primary detail-btn pull-right"
+                            uib-tooltip-placement="top" uib-tooltip="Save" ng-click="vm.addCar()">
+                                <i class="fa fa-floppy-o"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <div class="panel panel-default">
-            <div ng-if="vm.car_id === null" class="panel-heading">
-                <h3 class="panel-title"><span class="menu-icon fa fa-th-large"></span> New Car</h3>
-            </div>
-            <div ng-if="vm.car_id !== null" class="panel-heading">
-                <h3 class="panel-title"><span class="menu-icon fa fa-th-large"></span> {{vm.car.year}} {{vm.car.manufacture}} {{vm.car.make}}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-xs-12"><br>
-                        <div class="container">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-2">Manufacture</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" ng-model="vm.car.manufacture" ng-change="vm.updateCar()" placeholder="Car Name" class="form-control">
+            </form>
+            <div class="panel panel-default">
+                <div ng-if="vm.car_id === null" class="panel-heading">
+                    <h3 class="panel-title"><span class="menu-icon fa fa-th-large"></span> New Car</h3>
+                </div>
+                <div ng-if="vm.car_id !== null" class="panel-heading">
+                    <h3 class="panel-title"><span class="menu-icon fa fa-th-large"></span> {{vm.car.year}} {{vm.car.manufacture}} {{vm.car.make}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12"><br>
+                            <div class="container">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Manufacture</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" ng-model="vm.car.manufacture" ng-change="vm.updateCar()" placeholder="Car Manufacturer" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-2">Make</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" ng-model="vm.car.make" ng-change="vm.updateCar()" placeholder="Category" class="form-control">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Make</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" ng-model="vm.car.make" ng-change="vm.updateCar()" placeholder="Car Make" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-2">Year</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" ng-model="vm.car.year" ng-change="vm.updateCar()" placeholder="Category" class="form-control">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Year</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" ng-model="vm.car.year" ng-change="vm.updateCar()" placeholder="Car Year" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-2">Color</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" ng-model="vm.car.color" ng-change="vm.updateCar()" placeholder="Power Output" class="form-control">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Color</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" ng-model="vm.car.color" ng-change="vm.updateCar()" placeholder="Car Color" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-2">Passenger Seating</label>
-                                    <div class="col-xs-8">
-                                        <input type="text" ng-model="vm.car.passenger_seating" ng-change="vm.updateCar()" placeholder="Day Rate" class="form-control">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Passenger Seating</label>
+                                        <div class="col-xs-8">
+                                            <input type="text" ng-model="vm.car.passenger_seating" ng-change="vm.updateCar()" placeholder="Seating Amount" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
