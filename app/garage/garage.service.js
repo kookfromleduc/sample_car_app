@@ -39,10 +39,10 @@
               return $firebaseObject(root.ref('cars/'+ id));
           }
           function index(id) {
-              return $firebaseArray(root.ref('cars/')).$indexFor(id);
+              return $firebaseArray(root.ref('cars')).$indexFor(id);
           }
-          function key(key) {
-              return $firebaseArray(root.ref('cars/')).$keyAt(key);
+          function key(index) {
+              return $firebaseArray(root.ref('cars')).$keyAt(index);
           }
     }
 

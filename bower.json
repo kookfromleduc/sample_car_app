@@ -1,5 +1,5 @@
 {
-  "name": "pro-energy",
+  "name": "sample_car_app",
   "authors": [
     "bluerockapps <info@bluerockapps.com>"
   ],
@@ -22,11 +22,7 @@
     "angular-ui-grid": "^3.1.1",
     "angular-ui-router": "ui-router#^0.3.1",
     "angular-ui-select": "^0.18.0",
-    "angular-ui-tinymce": "latest",
     "angularfire": "^2.0.1",
-    "ng-file-upload": "^12.0.4",
-    "pdfmake": "^0.1.20",
     "rdash-ui": "~1.0.1",
-    "angular-ui-calendar": "^1.0.1"
   }
 }

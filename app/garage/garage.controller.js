@@ -60,9 +60,10 @@
 
             vm.updateCar = function() {
             if (vm.car_id != null)
+                vm.car.date_updated = firebase.database.ServerValue.TIMESTAMP;
                 vm.car.$save();
             }, function(error) {
-                storeCtrl.error = error;
+                vm.error = error;
             };
 
             vm.loadCar = function(id) {
@@ -89,9 +90,9 @@
             };
 
             vm.next = function() {
-                var key = vm.carIndex + 1;
-                if (key != vm.totalCount) {
-                    vm.loadCar(carsService.key(key));
+                var index = vm.carIndex + 1;
+                if (index != vm.totalCount) {
+                    vm.loadCar(carsService.key(index));
                 }
 
             }, function(error) {
@@ -99,10 +100,10 @@
             };
 
             vm.back = function() {
-                var key = vm.carIndex - 1;
+                var index = vm.carIndex - 1;
 
-                if (key < 0) key = 0
-                    vm.loadCar(carsService.key(key));
+                if (index < 0) key = 0
+                    vm.loadCar(carsService.key(index));
 
             }, function(error) {
                 vm.error = error;
